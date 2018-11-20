@@ -47,12 +47,27 @@ public class Ex05 extends Application {
         Image brightenedImage = transform(image, Color::brighter);
         ColorTransformer original = (x, y, c) -> (x / 5) % 2 == (y / 5) % 2 ? Color.GRAY : c;
 
-        int width = (int) image.getWidth();
-        int height = (int) image.getHeight();
-        ColorTransformer frame10px = (x, y, c) -> (x < 10 || width - x < 10) || (y < 10 || height - y < 10) ? Color.GRAY : c;
-        Image image2 = transform(image, frame10px);
+        Image image2 = transform(image, createFrame(image, 50, Color.AZURE));
 
         stage.setScene(new Scene(new HBox(new ImageView(image), /*new ImageView(brightenedImage),*/ new ImageView(image2))));
         stage.show();
+    }
+
+    /*
+     * Ex 08
+     * Generalize Exercise 5 by writing a static method that yields a ColorTransformer
+     * that adds a frame of arbitrary thickness and color to an image.
+     */
+    private static ColorTransformer createFrame(Image image, int thickness, Color color) {
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
+
+        if (thickness * 2 > width || thickness * 2 > height) {
+            throw new IllegalArgumentException("Cannot create frame");
+        }
+
+        return (x, y, c) -> (x < thickness || width - x < thickness)
+                || (y < thickness || height - y < thickness)
+                ? color : c;
     }
 }

@@ -8,11 +8,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.stage.*;
 
-@FunctionalInterface
-interface ColorTransformer {
-    Color apply(int x, int y, Color colorAtXY);
-}
-
 /**
  * @author siarhei
  */
@@ -47,9 +42,11 @@ public class Ex05 extends Application {
         Image brightenedImage = transform(image, Color::brighter);
         ColorTransformer original = (x, y, c) -> (x / 5) % 2 == (y / 5) % 2 ? Color.GRAY : c;
 
-        Image image2 = transform(image, createFrame(image, 50, Color.AZURE));
+        Image withFrame = transform(image, createFrame(image, 50, Color.AZURE));
+        Image brightenedWithFrame = transform(image,
+                ColorTransformer.compose(ColorTransformer.turn(Color::brighter), createFrame(image, 20, Color.GOLD)));
 
-        stage.setScene(new Scene(new HBox(new ImageView(image), /*new ImageView(brightenedImage),*/ new ImageView(image2))));
+        stage.setScene(new Scene(new HBox(new ImageView(image), new ImageView(brightenedWithFrame))));
         stage.show();
     }
 

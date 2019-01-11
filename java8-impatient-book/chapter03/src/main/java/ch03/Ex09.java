@@ -34,14 +34,12 @@ public class Ex09 {
     }
 
     private static Comparator<? super Object> lexicographicComparator(String... fieldNames) {
-        return (o1, o2) -> {
-            return Arrays.stream(fieldNames)
-                    .map(fieldName -> new Comparable[]{getValue(o1, fieldName), getValue(o2, fieldName)})
-                    .map(cmp -> cmp[0].compareTo(cmp[1]))
-                    .filter(res -> res != 0)
-                    .findFirst()
-                    .orElse(0);
-        };
+        return (o1, o2) -> Arrays.stream(fieldNames)
+                .map(fieldName -> new Comparable[]{getValue(o1, fieldName), getValue(o2, fieldName)})
+                .map(cmp -> cmp[0].compareTo(cmp[1]))
+                .filter(res -> res != 0)
+                .findFirst()
+                .orElse(0);
     }
 
     private static Comparable getValue(Object o, String fieldName) {

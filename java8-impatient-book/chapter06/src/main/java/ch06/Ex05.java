@@ -37,7 +37,7 @@ public class Ex05 {
                                 .flatMap(line -> Stream.of(line.split("[\\P{L}]+")))
                                 .map(String::trim)
                                 .filter(word -> !word.isEmpty())
-                                .forEach(word -> collector.merge(
+                                .forEach(word -> /*collector.merge(
                                         word,
                                         files,
                                         (set1, set2) -> {
@@ -45,7 +45,11 @@ public class Ex05 {
                                             mergeFiles.addAll(set2);
                                             return mergeFiles;
                                         }
-                                ));
+                                )*/
+                                //easier way
+                                collector
+                                        .computeIfAbsent(word, (key) -> new HashSet<>())
+                                        .add(file));
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

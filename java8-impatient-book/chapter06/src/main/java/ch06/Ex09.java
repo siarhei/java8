@@ -22,13 +22,12 @@ public class Ex09 {
             long v10 = value[1][0]*m.value[0][0] + value[1][1]*m.value[1][0];
             long v11 = value[1][0]*m.value[0][1] + value[1][1]*m.value[1][1];
 
-            Matrix matrix = new Matrix();
-            matrix.value[0][0] = v00;
-            matrix.value[0][1] = v01;
-            matrix.value[1][0] = v10;
-            matrix.value[1][1] = v11;
+            m.value[0][0] = v00;
+            m.value[0][1] = v01;
+            m.value[1][0] = v10;
+            m.value[1][1] = v11;
 
-            return matrix;
+            return m;
         }
 
         long fibonacci() {

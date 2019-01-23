@@ -17,8 +17,8 @@ public class Ex07 {
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(
                         Objects.requireNonNull(
-                                Ex07.class.getClassLoader().getResourceAsStream("WarAndPeace.txt"))));
-             Stream<String> words = br.lines().flatMap(line -> Stream.of(line.split("[\\P{L}]+")))) {
+                                Ex07.class.getClassLoader().getResourceAsStream("WarAndPeace.txt"))))) {
+            Stream<String> words = br.lines().flatMap(line -> Stream.of(line.split("[\\P{L}]+")));
 
             //data init
             final ConcurrentHashMap<String, Long> map = new ConcurrentHashMap<>();

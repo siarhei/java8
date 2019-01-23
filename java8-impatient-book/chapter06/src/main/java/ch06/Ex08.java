@@ -16,8 +16,8 @@ public class Ex08 {
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(
                         Objects.requireNonNull(
-                                Ex07.class.getClassLoader().getResourceAsStream("WarAndPeace.txt"))));
-             Stream<String> words = br.lines().flatMap(line -> Stream.of(line.split("[\\P{L}]+")))) {
+                                Ex07.class.getClassLoader().getResourceAsStream("WarAndPeace.txt"))))) {
+            Stream<String> words = br.lines().flatMap(line -> Stream.of(line.split("[\\P{L}]+")));
 
             String[] unsorted = words.collect(Collectors.toList()).toArray(new String[]{});
             System.out.println(unsorted.length);

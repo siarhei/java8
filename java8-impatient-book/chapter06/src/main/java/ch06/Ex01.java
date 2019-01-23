@@ -15,9 +15,9 @@ public class Ex01 {
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(
                         Objects.requireNonNull(
-                                Ex01.class.getClassLoader().getResourceAsStream("WarAndPeace.txt"))));
-             //splitting lines into words using non letters separator
-             Stream<String> words = br.lines().flatMap(line -> Stream.of(line.split("[\\P{L}]+")))) {
+                                Ex01.class.getClassLoader().getResourceAsStream("WarAndPeace.txt"))))) {
+            //splitting lines into words using non letters separator
+            Stream<String> words = br.lines().flatMap(line -> Stream.of(line.split("[\\P{L}]+")));
 
             final AtomicReference<String> longestWord = new AtomicReference<>("");
             //getAndAccumulate equals to accumulateAndGet in this task

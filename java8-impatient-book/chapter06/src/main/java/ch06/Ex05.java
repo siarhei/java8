@@ -24,20 +24,20 @@ public class Ex05 {
         final ConcurrentHashMap<String, Set<File>> collector = new ConcurrentHashMap<>();
 
 
-        Files.walk(Paths.get(USER_DIR))
+        try (Stream<File> fileStream = Files.walk(Paths.get(USER_DIR))
                 .parallel()
                 .map(Path::toFile)
                 .filter(File::isFile)
-                .filter(file -> file.getName().endsWith(FILE_EXT))
-                .forEach(file -> {
-                    Set<File> files = new HashSet<>();
-                    files.add(file);
-                    try {
-                        Files.lines(file.toPath(), Charset.forName(UTF_8))
-                                .flatMap(line -> Stream.of(line.split("[\\P{L}]+")))
-                                .map(String::trim)
-                                .filter(word -> !word.isEmpty())
-                                .forEach(word -> /*collector.merge(
+                .filter(file -> file.getName().endsWith(FILE_EXT))) {
+            fileStream.forEach(file -> {
+                Set<File> files = new HashSet<>();
+                files.add(file);
+                try {
+                    Files.lines(file.toPath(), Charset.forName(UTF_8))
+                            .flatMap(line -> Stream.of(line.split("[\\P{L}]+")))
+                            .map(String::trim)
+                            .filter(word -> !word.isEmpty())
+                            .forEach(word -> /*collector.merge(
                                         word,
                                         files,
                                         (set1, set2) -> {
@@ -46,14 +46,15 @@ public class Ex05 {
                                             return mergeFiles;
                                         }
                                 )*/
-                                //easier way
-                                collector
-                                        .computeIfAbsent(word, (key) -> new HashSet<>())
-                                        .add(file));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                                    //easier way
+                                    collector
+                                            .computeIfAbsent(word, (key) -> new HashSet<>())
+                                            .add(file));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
 
         System.out.println(collector.get("RuntimeException"));
     }

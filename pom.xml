@@ -9,6 +9,7 @@
 
     <modules>
         <module>java8-impatient-book</module>
+        <module>interview</module>
     </modules>
 
     <properties>

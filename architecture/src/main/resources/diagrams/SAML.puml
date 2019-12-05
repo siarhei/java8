@@ -1,0 +1,14 @@
+@startuml
+title Service Provider initiated SAML authentication
+"Service Provider" as SP <- "User's browser" as user: Request EIS resource
+SP --> "User's browser" as user: HTTP redirect to IDP
+"User's browser" as user -> "Identity Service provider" as IDP: Browser calls IDP
+IDP -> IDP: checks the session
+"User's browser" as user <-- IDP: HTTP redirect to login screen
+"User's browser" as user -> IDP: login/password HTTP POST
+IDP -> IDP: checks the entered data, creates encoded token
+"User's browser" as user <-- IDP: sends XHTML with Base64 encoded hidden input field with SAML data
+SP <- "User's browser" as user: automatically submits encoded token
+SP <-- SP: validates the token
+SP --> "User's browser" as user: HTTP redirect to initially requested resource
+@enduml

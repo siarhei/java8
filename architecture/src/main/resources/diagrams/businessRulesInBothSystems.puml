@@ -1,0 +1,12 @@
+@startuml
+
+title Business Rules in PF and SelfService
+
+Storage "OpenL Rules" as openl
+[SelfService] as ss
+[Product Factory] as pf
+
+ss --down-> openl : uses
+pf --down-> openl : uses
+
+@enduml

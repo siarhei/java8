@@ -1,0 +1,35 @@
+@startuml
+'left to right direction
+title Quick Quote Deployment Diagram
+
+actor "Mobile App" as user
+rectangle "Load Balancer" as balancer
+
+database "Transaction DB" as db
+component "Main App" as eis
+
+rectangle "DXP Cluster" as dxpc {
+    node "DXP Server 1" as dxps1 {
+        component DXP as dxp1
+    }
+    node "DXP Server N" as dxpsN {
+        component DXP as dxpN
+    }
+}
+
+rectangle "App Cluster" as appc {
+    node "App Server 1" as apps1 {
+        component "ipb-app" as app1
+    }
+    node "App Server N" as appsN {
+        component "ipb-app" as appN
+    }
+}
+
+user -> balancer : <<https>>
+balancer -right-> dxpc : <<https>>
+dxps1 .down. dxpsN : N instances
+dxpc -right-> appc
+apps1 .down. appsN : N instances
+
+@enduml

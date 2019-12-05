@@ -1,0 +1,19 @@
+@startuml
+
+title Endorsement product definition structure
+
+package EndorsementWorkspace {
+    package Insured {
+        object InsuredEndorsementPhoneComponent {
+          phoneNumber : input, required, prefilled with existing value
+        }
+        note left : only phoneNumber is visible
+    }
+}
+
+object InsuredComponent
+note left : Existing component
+
+InsuredEndorsementPhoneComponent --up-|> InsuredComponent : extends
+
+@enduml

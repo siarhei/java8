@@ -10,6 +10,7 @@
     <modules>
         <module>java8-impatient-book</module>
         <module>interview</module>
+        <module>architecture</module>
     </modules>
 
     <properties>

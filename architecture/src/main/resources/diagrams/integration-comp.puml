@@ -1,0 +1,42 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/aheil/EIP-PlantUML/master/dist/EIP-PlantUML.puml
+
+/'
+MsgChannel(channel1, "Channel 1")
+MsgChannel(channel2, "Channel 2")
+Message(msg, "Message")
+
+Send(channel1, msg)
+Send(msg, channel2)
+
+Splitter(s)
+PollingConsumer(filePoller)
+'/
+title Integration Component Diagram
+
+component Quartz #lightblue
+component "Third Party" as ext #red
+component "EIS Integration Layer" as il #lightgreen
+component "Report Job Generation" as job #lightblue
+note right: Quartz scheduled job that runs at the end of month and fetches data for the current period
+component "Policy Subsystem" as policy #lightblue
+
+database DB #lightblue
+database SFTP
+
+Quartz --> job : triggers
+ext --down-> SFTP : polls at specific time
+il --down-> SFTP : stores report
+
+job ..> il : report has been generated notification
+job --> policy : uses
+policy --> DB
+
+legend
+|= |= Type |
+|<back:#red>   </back>| Third Party |
+|<back:#lightgreen>   </back>| Integration |
+|<back:#lightblue>   </back>| EIS |
+endlegend
+
+@enduml

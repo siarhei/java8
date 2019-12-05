@@ -1,0 +1,34 @@
+@startuml
+
+(*) --> if "Customer exists?"
+->[Yes] "Gather
+         0. Pick Risk State
+         1. Insured Info
+         2. Driver Info
+         3. Vehicle Info"
+else
+-right->[No] "Register Customer"
+endif
+--> "Gather
+    0. Pick Risk State
+    1. Insured Info
+    2. Driver Info
+    3. Vehicle Info"
+
+-> "Select Coverages
+for 'Standard' package
+and coverageType (Split/Single)"
+'note left : "Based on the chosen Risk State"
+-down-> "Save Quote"
+-> "Validate Quote" as validate
+
+if "Validation Fails?" then
+->[Yes] "Fix Problems
+& Update Quote"
+-> validate
+else
+-->[No] "Calculate Premium"
+endif
+-right-> "Purchase Policy"
+-->(*)
+@enduml

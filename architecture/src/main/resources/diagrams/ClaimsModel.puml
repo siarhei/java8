@@ -1,0 +1,57 @@
+@startuml
+
+title Mobile Devices Warranty Claims Model
+'policy part
+object ClaimsPolicy #Aqua
+object ClaimsPolicyParty #Aqua
+object ClaimsPolicyRiskItem #Aqua
+object ClaimsPolicyCoverage #Aqua
+
+ClaimsPolicy --|{ ClaimsPolicyRiskItem
+ClaimsPolicy --|{ ClaimsPolicyParty
+ClaimsPolicyRiskItem --|{ ClaimsPolicyCoverage
+
+'claims part
+object ClaimsSummary
+object ClaimsRefParty
+object ClaimsParty
+object ClaimsLossInfo {
+  -damageDesc
+}
+object ClaimsDamage
+object ClaimsFeature {
+  -claimantOid
+  -coverageOid
+  -riskItemOid
+}
+note right: claimant, coverage, riskItem
+object ClaimsFeatureReserve {
+  -type: ReserveType
+  -limitAmount
+}
+
+enum ReserveType {
+  EXPENSE
+  INDEMNITY
+}
+
+ClaimsPolicy .right. ClaimsSummary
+ClaimsSummary --|{ ClaimsRefParty
+ClaimsRefParty -down- ClaimsParty
+ClaimsSummary ..|{ ClaimsDamage
+ClaimsDamage --|| ClaimsLossInfo
+ClaimsDamage --|{ ClaimsFeature
+ClaimsFeature --|{ ClaimsFeatureReserve
+
+'payment
+object ClaimsPayment {
+  -featureId
+  -reserveType: ReserveType
+}
+object ClaimsPaymentAllocation {
+  -allocationAmount
+}
+
+ClaimsPayment --|{ ClaimsPaymentAllocation
+ClaimsPayment .. ClaimsFeature
+@enduml

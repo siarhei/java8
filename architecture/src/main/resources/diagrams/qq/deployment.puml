@@ -1,0 +1,53 @@
+@startuml
+title Quick Quote Deployment Diagram
+
+actor "Mobile Agent" as user #red
+actor "Rating Admin" as admin #red
+rectangle "Firewall" as firewall
+rectangle "Firewall" as firewallws
+
+node "DXP Server" as dxps {
+    component "dxp-gateway" as dxp
+    database "DXP H2" as dxpdb
+}
+
+node "DB Server" {
+    database "MSSQL" as db
+}
+
+node "EIS Server" as eis {
+    component "ipb-app" as app
+    component "E-Folder" as cmis
+    storage "CMIS Storage" as cmisstore
+}
+
+node "Party Server" as party {
+    component SOLR as solr
+    storage "Party Index" as pindex
+}
+
+node "Rating Server" {
+    component "ipb-rate-app" as rate
+    component webstudio as ws
+    storage "Design Repository" as design
+    database "Rating H2" as rateh2
+}
+
+user -> firewall : <<https>>
+firewall -right- dxp : <<https>>
+dxp -down- dxpdb
+dxp - app : REST <<https>>
+app -- cmis
+cmisstore - cmis
+cmis -right- db
+db - app
+app - solr
+solr -- pindex
+design -- ws
+ws - rateh2
+rate -- rateh2
+ws <-left- firewallws : <<https>>
+firewallws <-left- admin : <<https>>
+app --- rate
+
+@enduml

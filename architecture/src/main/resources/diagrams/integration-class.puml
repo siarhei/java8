@@ -1,0 +1,29 @@
+@startuml
+
+title Integration Class Diagram
+
+interface ApplicationEventListener<ReportCreatedEvent>
+interface EISReportIntegrationService
+class EISReportIntegrationServiceImpl
+
+interface EFolderService
+class CamelSftpComponent
+class ReportCreatedEvent {
+ - reportId
+}
+
+EISReportIntegrationService <|.. EISReportIntegrationServiceImpl
+EISReportIntegrationServiceImpl --> EFolderService
+EISReportIntegrationServiceImpl --> CamelSftpComponent
+ApplicationEventListener <|-down.. EISReportIntegrationServiceImpl
+
+'jobs
+
+abstract class BaseInterruptableAuditingJob
+class ReportGeneratingJob
+
+ReportGeneratingJob -up-|> BaseInterruptableAuditingJob
+ReportGeneratingJob -- ReportCreatedEvent : generates
+ReportCreatedEvent -right- EISReportIntegrationServiceImpl : catches
+
+@enduml

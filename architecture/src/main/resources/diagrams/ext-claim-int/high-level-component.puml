@@ -1,0 +1,27 @@
+@startuml
+
+package "EIS" {
+    [Claims Integration] as ci
+    [Party] as party
+    [Claims] as claims
+    [Policy] as policy
+    [Customer] as crm
+    [Billing] as billing
+
+crm - policy
+crm -- party
+party - claims
+policy - claims
+crm - claims
+policy - billing
+claims - ci
+
+}
+
+package "External Claims System" {
+    SOAP - [External Claims]
+
+    ci -> SOAP
+}
+
+@enduml

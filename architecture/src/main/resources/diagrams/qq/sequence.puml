@@ -1,0 +1,52 @@
+@startuml
+actor "Mobile Agent" as mobile #red
+participant DXP #lightgreen
+
+'Registration
+alt Register in the system
+mobile -> mobile : Show register page
+mobile -> DXP : POST /customer/v1/registration
+mobile <-- DXP : assign registered user to the session
+end
+
+'DataGather
+mobile -> mobile: Init QuickQuote
+alt For each lookup
+mobile -> DXP: GET /quickquote-auto/v1/lookups/{lookupName}
+DXP -> DXP: Caches lookup data for DG
+mobile <-- DXP
+end
+mobile -> mobile: Select risk state
+mobile -> DXP: Load lookup data for Insured & Driver
+mobile <-- DXP
+mobile -> mobile: Input data for Insured & Driver
+mobile -> DXP : GET /quickquote-auto/v1/vehicles
+mobile <-- DXP : load found vehicles
+mobile -> mobile : select vehicle
+mobile -> mobile : select package and coverage type
+mobile -> DXP : POST /quickquote-auto/v1/packages/{packageCd}/values
+mobile <-- DXP : load applicable coverages
+
+'Save
+mobile -> DXP : (save qoute) POST /quickquote-auto/v1/quotes
+mobile <-- DXP : quote has been saved
+
+'Validate
+mobile -> DXP : POST /quickquote-auto/v1/quotes/{policyNumber}/validate
+alt Validation Passed
+mobile <-- DXP : no validation errors
+else Validation Failed
+mobile <-- DXP : validation errors
+mobile -> mobile : display & fix errors
+mobile -> DXP : PUT /quickquote-auto/v1/quotes/{policyNumber}
+mobile <-- DXP : successfully updated
+end
+
+'Rate
+mobile -> DXP : POST /quickquote-auto/v1/quotes/{policyNumber}/rate
+mobile <-- DXP : premium result
+
+'Issue
+mobile -> DXP : POST /quickquote/v1/quotes/{policyNumber}/purchase
+mobile <-- DXP : policy issued
+@enduml

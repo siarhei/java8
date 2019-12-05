@@ -1,0 +1,62 @@
+@startuml
+
+title EISU Deployment Diagram
+
+Database "Transaction DB" as db
+Storage "Documents Storage" as ds
+
+:user:
+
+node cloud0 {
+  component ApacheHTTPServer {
+    [Proxy] as proxy
+  }
+}
+
+node cloud1 {
+  component ApacheTomcat11 {
+    [Main App] as eis
+  }
+  component ApacheTomcat12 {
+    [E-Folder App] as cmis
+  }
+}
+node cloud2 {
+  component ApacheTomcat21 {
+    [Party App] as solr
+  }
+  Storage "Party Storage" as ps
+}
+node cloud03 {
+  component ApacheTomcat31 {
+    [Rating App] as rating
+  }
+  component ApacheTomcat32 {
+    [Webstudio] as ws
+  }
+  Storage "Rating Rules" as rr
+}
+node cloud04 {
+  component ApacheTomcat {
+    [DXP] as dxp
+  }
+}
+
+[External Services] as ext
+
+user --right-> proxy : HTTPS
+proxy --right-> eis : HTTP
+
+eis --down-> rating : HTTP
+eis --down-> db
+cmis --down-> ds
+eis --right-> cmis : HTTP
+solr --down-> ps
+eis --left-> solr : HTTP
+dxp --down-> eis : HTTP
+ext --left-> dxp : HTTPS
+
+ws --down-> rr
+rating --down-> rr
+
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+
+title Mobile Devices Warranty Policy Model
+
+object Customer
+entity Policy {
+ -policyNumber
+}
+entity PolicyDetail
+'buyer
+entity Insured {
+ -name
+}
+object PlanManager
+note top : controls plan selection
+'apple product such as macbook, iphone
+entity RiskItem {
+  -plan : Plan
+  -deviceInfo
+}
+note right : mobile device
+'screen damage, device lost
+entity Coverage {
+  -coverageCd
+}
+note right : The set of coverages depending on selected plan
+
+enum Plan {
+  Care
+  ExtendedCare
+}
+note right : available plans
+
+Customer ||..right..|| Insured
+Policy --|| PolicyDetail
+PolicyDetail --|{ RiskItem
+RiskItem --|{ Coverage
+PolicyDetail --|| Insured
+PlanManager .. RiskItem
+
+@enduml

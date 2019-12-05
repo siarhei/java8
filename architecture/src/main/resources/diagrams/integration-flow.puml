@@ -1,0 +1,12 @@
+@startuml
+title Integration Flow Diagram
+"Quartz Scheduler" as quartz -> "Report Job Generation" as job: starts by timer
+job -> "Policy Subsystem" as policy : grabs data for specific period
+policy -> policy : generates report
+policy --> "Policy eFolder" as efolder : and stores it into eFolder
+job <-- policy : document id
+job -> "EIS Integration Layer" as il : report with id has been generated (async Spring event)
+efolder <-- il : give me a doc with specific ID
+efolder -> il : here you are
+il -> "SFTP" : upload the report
+@enduml

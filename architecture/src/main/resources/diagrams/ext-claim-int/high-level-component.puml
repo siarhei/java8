@@ -1,12 +1,12 @@
 @startuml
 
 package "EIS" {
-    [Claims Integration] as ci
-    [Party] as party
-    [Claims] as claims
-    [Policy] as policy
-    [Customer] as crm
-    [Billing] as billing
+    [Claims Integration] as ci #lightgreen
+    [Party] as party #lightblue
+    [Claims] as claims #lightblue
+    [Policy] as policy #lightblue
+    [Customer] as crm #lightblue
+    [Billing] as billing #lightblue
 
 crm - policy
 crm -- party
@@ -19,9 +19,18 @@ claims - ci
 }
 
 package "External Claims System" {
-    SOAP - [External Claims]
+    interface SOAP #red
+    [External Claims] as extcl #red
 
-    ci -> SOAP
+    SOAP - extcl
+    ci <--> SOAP
 }
+
+legend
+|= |= Type |
+|<back:#red>   </back>| Third Party |
+|<back:#lightgreen>   </back>| Integration |
+|<back:#lightblue>   </back>| EIS |
+endlegend
 
 @enduml

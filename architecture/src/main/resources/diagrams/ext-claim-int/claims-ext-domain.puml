@@ -1,0 +1,63 @@
+@startuml
+
+title Claims External API domain
+
+class Claim {
+    - String claimNumber
+    - String policyNumber
+    - List<PartyInfo> claimParties
+    - List<VehicleDamageInfo> damages
+}
+
+class PartyInfo {
+    - String firstName
+    - String lastName
+    - AddressInfo address
+    - PaymentMethodInfo paymentMethod
+}
+
+class VehicleDamageInfo {
+    - VehicleInfo vehicle
+    - List<CoverageInfo> coverages
+    - PartyInfo damageParty
+}
+
+class CoverageInfo {
+    - String coverageCd
+    - BigDecimal limitAmount
+    - BigDecimal deductibleAmount
+}
+
+class VehicleInfo {
+    - String VIN
+    - String make
+    - String model
+    - int year
+    - AddressInfo garageAddress
+}
+
+abstract class PaymentMethodInfo {
+}
+
+class EFTPaymentMethodInfo {
+    - String bankAccountNumber
+    - String routingNumber
+}
+
+class ChequePaymentMethodInfo {
+    - String chequeNumber
+    - AddressInfo address
+}
+
+PaymentMethodInfo <|-- EFTPaymentMethodInfo
+PaymentMethodInfo <|-- ChequePaymentMethodInfo
+
+
+Claim o-- "1..*" PartyInfo
+Claim *-- "1..*" VehicleDamageInfo
+VehicleDamageInfo *-- VehicleInfo
+VehicleDamageInfo *-- "1..*" CoverageInfo
+PartyInfo o-- PaymentMethodInfo
+
+
+@enduml

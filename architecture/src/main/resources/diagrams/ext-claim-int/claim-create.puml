@@ -1,0 +1,27 @@
+@startuml
+participant "Base Claims" as bc #lightblue
+participant "Claims Integration Layer" as cil #lightgreen
+queue "Claims" as c #lightgreen
+queue "Claims Status Update" as csu #lightgreen
+participant "Claims Integration" as ci #lightgreen
+
+c <- ci : 1 : fetch new data
+cil <- c : 2 : new claim received
+bc <- cil : 3 : NewExternalClaimAsyncTask
+bc <- bc : 4 : validate
+bc --> cil : 5 : ClaimValidatedEvent
+cil --> csu : 6 : update status
+csu --> ci : 7 : update status received
+alt "Validation Passes"
+bc <- bc : 8 : create new claim
+bc --> cil : 9 : ClaimCreatedEvent
+cil --> csu : 10 : update status
+csu --> ci : 11 : update status received
+end
+
+legend
+|= |= Type |
+|<back:#lightgreen>   </back>| Integration |
+|<back:#lightblue>   </back>| EIS |
+endlegend
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+package "com.exigen.eis.party.adapter" {
+    interface PartyAdapter {
+        + {method} map(Object)
+        + {method} getMappingClassName()
+    }
+}
+
+package "com.exigen.ipb.claims.party.adapter" {
+    abstract class AbstractClaimsPartyAdapter {
+        - {field} claimsPartyIntegrationDao
+        # {method} mapPartiesToPartyModel(List<ClaimsRefPartyEntity>, BaseEntity)
+    }
+    class ClaimsPartyAdapter {
+        + {method} map(Object)
+        + {method} getMappingClassName()
+        # {method} mapClaimsReportedParties(ClaimsEntity)
+    }
+
+    class ClaimsDamagePartyAdapter {
+        + {method} map(Object)
+        + {method} getMappingClassName()
+    }
+}
+
+package "com.exigen.ipb.claims.auto.party.adapter" {
+    class ClaimsVehicleLossPartyAdapter {
+        + {method} map(Object)
+        + {method} getMappingClassName()
+        # {method} mapVehicleParty(VehicleLossEntity)
+        # {method} mapOtherVehInfoToParty(Party<VehicleDetails>, ClaimsVehInfo)
+    }
+}
+
+PartyAdapter <|.. AbstractClaimsPartyAdapter
+AbstractClaimsPartyAdapter <|-- ClaimsPartyAdapter
+AbstractClaimsPartyAdapter <|-- ClaimsDamagePartyAdapter
+AbstractClaimsPartyAdapter <|-- ClaimsVehicleLossPartyAdapter
+
+@enduml

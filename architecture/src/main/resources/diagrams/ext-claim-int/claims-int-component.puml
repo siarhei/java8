@@ -1,0 +1,47 @@
+@startuml
+
+top to bottom direction
+
+package "EIS" {
+    node "claims-int-app" {
+        [Claims Integration] as ci #lightgreen
+    }
+    node "ipb-app" {
+        [Base Claims] as bcl #lightblue
+        [Claims Integration Layer] as claims #lightgreen
+        bcl <.> claims : event driven
+    }
+
+    node "Messaging System" {
+        queue "Claims" as cq #lightgreen
+        queue "Payments" as pq #lightgreen
+        queue "Claims Status Update" as csupq #lightgreen
+        queue "Payments Status Update" as psuq #lightgreen
+    }
+
+    claims --> cq : read
+    cq <-- ci : write
+    claims --> pq : read
+    pq <-- ci : write
+    claims --> csupq : write
+    csupq <-- ci : read
+    claims --> psuq : write
+    psuq <-- ci : read
+}
+
+package "External Claims System" {
+    interface SOAP #red
+    [External Claims] as extcl #red
+
+    SOAP - extcl
+    ci <--> SOAP
+}
+
+legend
+|= |= Type |
+|<back:#red>   </back>| Third Party |
+|<back:#lightgreen>   </back>| Integration |
+|<back:#lightblue>   </back>| EIS |
+endlegend
+
+@enduml

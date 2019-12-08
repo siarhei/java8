@@ -12,5 +12,11 @@
     <groupId>by.siarhei.java8.iview</groupId>
     <artifactId>interview</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

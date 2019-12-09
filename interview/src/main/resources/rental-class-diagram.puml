@@ -1,0 +1,45 @@
+@startuml
+
+title Rental Diagram
+
+abstract class Apartment {
+  - Long id
+  - String unit
+  + {method} getters and setters
+}
+
+class Building {
+  - Long id
+  - String address
+  + {method} getters and setters
+}
+
+class Tenant {
+  - Long id
+  - String name
+  + {method} getters and setters
+}
+
+class Owner {
+  - Long id
+  - String name
+  + {method} getters and setters
+}
+
+class Studio {
+  - String category
+  + {method} getters and setters
+}
+
+class Penthouse {
+  - int floorNumber
+  + {method} getters and setters
+}
+
+Tenant "1" -down- "0..1" Apartment
+Owner "1" -right- "*" Apartment
+Apartment "*" -right- "1" Building
+Studio -up-|> Apartment
+Penthouse -up-|> Apartment
+
+@enduml

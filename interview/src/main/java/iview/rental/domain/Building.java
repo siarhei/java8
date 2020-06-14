@@ -25,4 +25,9 @@ public class Building extends AbstractEntity {
     public void setApartments(List<Apartment> apartments) {
         this.apartments = apartments;
     }
+
+    @Override
+    public void print() {
+        
+    }
 }

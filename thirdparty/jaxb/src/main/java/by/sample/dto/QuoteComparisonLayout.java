@@ -23,10 +23,11 @@ public class QuoteComparisonLayout {
 
     private List<Column> columns;
 
-    @XmlElements({
+    //eclipse-link doesn't work with such construction
+    /*@XmlElements({
             @XmlElement(name="rowA", type= RowA.class),
             @XmlElement(name="rowB", type= RowB.class),
-    })
+    })*/
     @XmlElementWrapper
     public List<Row> getRows() {
         return rows;

@@ -12,4 +12,24 @@
     <artifactId>thirdparty</artifactId>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>common-csv</module>
+        <module>jaxb</module>
+        <module>apache-camel</module>
+        <module>rxjava</module>
+    </modules>
+
+    <properties>
+        <rxjava.version>3.0.11-RC3</rxjava.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.reactivex.rxjava3</groupId>
+                <artifactId>rxjava</artifactId>
+                <version>${rxjava.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

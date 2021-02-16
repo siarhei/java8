@@ -12,6 +12,9 @@
         <module>interview</module>
         <module>architecture</module>
         <module>thirdparty</module>
+        <module>thirdparty/common-csv</module>
+        <module>thirdparty/jaxb</module>
+        <module>thirdparty/spring</module>
     </modules>
 
     <properties>

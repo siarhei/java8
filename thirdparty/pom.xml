@@ -15,6 +15,7 @@
     <modules>
         <module>common-csv</module>
         <module>jaxb</module>
+        <module>kafka</module>
         <module>apache-camel</module>
         <module>rxjava</module>
         <module>jpasskit</module>
@@ -39,4 +40,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
 </project>

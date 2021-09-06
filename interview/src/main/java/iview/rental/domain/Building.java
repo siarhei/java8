@@ -7,6 +7,7 @@ import java.util.List;
 @Entity
 public class Building extends AbstractEntity {
     private String address;
+
     @OneToMany
     private List<Apartment> apartments;
 

@@ -1,13 +1,12 @@
 package iview.rental.domain;
 
-public class Owner extends AbstractEntity {
-    private String name;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.List;
 
-    public String getName() {
-        return name;
-    }
+@Entity
+public class Owner extends Person {
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @OneToMany(mappedBy = "owner")
+    private List<Apartment> apartments;
 }

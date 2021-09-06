@@ -1,0 +1,65 @@
+{
+  "formatVersion" : 1,
+  "passTypeIdentifier" : "pass.com.exigeninsurance.SelfServices",
+  "serialNumber" : "{{policyNumber}}",
+  "teamIdentifier" : "5FD8V7S4S6",
+  "organizationName" : "EIS",
+  "description" : "EIS Auto Policy",
+  "logoText" : "EIS Auto Policy Card",
+  "expirationDate": "{{expirationDate}}",
+  "foregroundColor" : "rgb(255, 255, 255)",
+  "backgroundColor" : "rgb(223, 134, 48)",
+  "generic" : {
+    "primaryFields" : [
+      {
+        "key" : "policyNumber",
+        "value" : "{{policyNumber}}"
+      }
+    ],
+    "secondaryFields" : [
+        {
+          "key" : "vehicleName",
+          "label" : "Vehicle",
+          "value" : "{{vehicleMake}} {{vehicleModel}}, {{vehicleYear}}"
+        },
+      {
+        "key" : "insured",
+        "label" : "Insured",
+        "value" : "{{insuredFirstName}} {{insuredLastName}}"
+      }
+    ],
+    "auxiliaryFields": [
+        {
+          "key" : "vehicleVin",
+          "label" : "VIN",
+          "value" : "{{vehicleVin}}"
+        },
+        {
+          "dateStyle" : "PKDateStyleShort",
+          "key" : "effectiveDate",
+          "label" : "Effective",
+          "value" : "{{effectiveDate}}"
+        },
+        {
+          "dateStyle" : "PKDateStyleShort",
+          "key" : "expirationDate",
+          "label" : "to",
+          "value" : "{{expirationDate}}"
+        }
+    ],
+    "backFields" : [
+      {
+        "label" : "Garaging address",
+        "key" : "garagingAddress",
+        "value" : "{{vehicleAddressLine1}}, {{vehicleCity}} {{vehicleState}} {{vehiclePostalCode}}"
+      }
+    ]
+  },
+  "barcodes": [
+      {
+          "format": "PKBarcodeFormatQR",
+          "message": "{{glxAppUrl}}/flow?_flowId=policy-detail-flow&policyNumber={{policyNumber}}#noback",
+          "messageEncoding": "iso-8859-1"
+      }
+  ]
+}

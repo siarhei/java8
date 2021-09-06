@@ -17,10 +17,12 @@
         <module>jaxb</module>
         <module>apache-camel</module>
         <module>rxjava</module>
+        <module>jpasskit</module>
     </modules>
 
     <properties>
         <rxjava.version>3.0.11-RC3</rxjava.version>
+        <jpasskit.version>0.1.2</jpasskit.version>
     </properties>
 
     <dependencyManagement>
@@ -29,6 +31,11 @@
                 <groupId>io.reactivex.rxjava3</groupId>
                 <artifactId>rxjava</artifactId>
                 <version>${rxjava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.brendamour</groupId>
+                <artifactId>jpasskit</artifactId>
+                <version>${jpasskit.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
